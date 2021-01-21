@@ -1,6 +1,6 @@
 ﻿using src.Entities;
 using System;
-using System.Globalization;
+using System.Collections.Generic;
 
 namespace src.Services
 {
@@ -18,26 +18,20 @@ namespace src.Services
 
         public void ProcesarFatura(Contrato contrato)
         {
-            DateTime[] vencimento = new DateTime[Parcelas - 1];
-            double[] pagamento = new double[Parcelas - 1];
-            double[] tarifa = new double[Parcelas - 1];
-            double[] juros = new double[Parcelas - 1];
-
+            List<Vencimento> vencimentos = new List<Vencimento>();
+            Console.WriteLine("Sistema de pagamento: " + _sistemaDePagamento.Sistema());
             for (int i = 0; i < Parcelas; i++)
             {
-                vencimento[i] = contrato.Data.AddMonths(i + 1);
-                pagamento[i] = contrato.Valor / Parcelas;
-                tarifa[i] = _sistemaDePagamento.Tarifa(contrato.Valor);
-                juros[i] = _sistemaDePagamento.Juros(contrato.Valor);
+                DateTime vencimento = contrato.Data.AddMonths(i + 1);
+                double valorDoServico = contrato.Valor / Parcelas;
+                double juros = _sistemaDePagamento.Juros(valorDoServico) * (i + 1);
+                double tarifa = _sistemaDePagamento.Tarifa(valorDoServico + juros);
+                
 
-                Console.WriteLine($"Parcela #{i}");
-                Console.WriteLine($"Vencimento: {vencimento[i].ToString("dd/MM/yyyy")}");
-                Console.WriteLine($"Total: R$ {(pagamento[i] + tarifa[i] + juros[i]).ToString("F2", CultureInfo.InvariantCulture)}");
-                Console.WriteLine($"\tValor: R$ {pagamento[i].ToString("F2", CultureInfo.InvariantCulture)}");
-                Console.WriteLine($"\tTarifa: R$ {tarifa[i].ToString("F2", CultureInfo.InvariantCulture)}");
-                Console.WriteLine($"\tJuros: R$ {juros[i].ToString("F2", CultureInfo.InvariantCulture)}");
-                Console.WriteLine();
+                vencimentos.Add(new Vencimento(vencimento, valorDoServico, tarifa, juros));
             }
+
+            contrato.Fatura = new Fatura(Parcelas, contrato.Valor, vencimentos);
         }
     }
 }
