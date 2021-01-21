@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Text;
 
 namespace src.Entities
 {
@@ -9,7 +10,7 @@ namespace src.Entities
         public string Titulo { get; private set; }
         public DateTime Data { get; private set; }
         public double Valor { get; private set; }
-        public Fatura Fatura { get; private set; }
+        public Fatura Fatura { get; set; }
 
         public Contrato(int id, string titulo, DateTime data, double valor)
         {
@@ -22,13 +23,15 @@ namespace src.Entities
 
         public override string ToString()
         {
-            return Id
-                + ", "
-                + Titulo
-                + ", "
-                + Data.ToString("dd/MissingMemberException/yyyy")
-                + ", "
-                + Valor.ToString("F2", CultureInfo.InvariantCulture);
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine($"id: {Id}");
+            sb.AppendLine($"Titulo: {Titulo}");
+            sb.AppendLine($"Data: {Data.ToString("dd/MM/yyyy")}");
+            sb.AppendLine($"Valor: R$ {Valor}");
+            sb.AppendLine();
+            sb.AppendLine($"Vencimentos");
+            sb.AppendLine(Fatura.ToString());
+            return sb.ToString();
         }
     }
 }
