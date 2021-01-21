@@ -1,39 +1,64 @@
 ﻿using System;
-using System.Globalization;
+using System.Collections.Generic;
+using System.Text;
 
 namespace src.Entities
 {
     class Fatura
     {
+        public int Parcelas { get; private set; }
         public double ValorDoServico { get; private set; }
-        public double Tarifas { get; private set; }
-        public double Juros { get; private set; }
+        public List<Vencimento> Vencimentos { get; private set; }
+
+        public Fatura(int parcelas, double valorDoServico, List<Vencimento> vencimentos)
+        {
+            Parcelas = parcelas;
+            ValorDoServico = valorDoServico;
+            Vencimentos = vencimentos;
+        }
+
+        public double Tarifas
+        {
+            get
+            {
+                double tarifa = 0.0;
+                foreach (Vencimento vencimento in Vencimentos)
+                {
+                    tarifa += vencimento.Tarifa;
+                }
+                return tarifa;
+            }
+        }
+
+        public double Juros
+        {
+            get
+            {
+                double juros = 0.0;
+                foreach(Vencimento vencimento in Vencimentos)
+                {
+                    juros += vencimento.Juros;
+                }
+                return juros;
+            }
+        }
 
         public double Total
         {
             get { return ValorDoServico + Tarifas + Juros; }
         }
 
-        public Fatura(double valorDoServico, double tarifas, double juros)
-        {
-            ValorDoServico = valorDoServico;
-            Tarifas = tarifas;
-            Juros = juros;
-        }
-
         public override string ToString()
         {
-            return "Valor do serviço: R$ "
-                + ValorDoServico.ToString("F2", CultureInfo.InvariantCulture)
-                + Environment.NewLine
-                + "Tarifas: R$ "
-                + Tarifas.ToString("F2", CultureInfo.InvariantCulture)
-                + Environment.NewLine
-                + "Juros: R$ "
-                + Juros.ToString("F2", CultureInfo.InvariantCulture)
-                + Environment.NewLine
-                + "Total: R$ "
-                + Total.ToString("F2", CultureInfo.InvariantCulture);
+            StringBuilder sb = new StringBuilder();
+            int parcela = 1;
+            foreach (Vencimento vencimento in Vencimentos)
+            {
+                sb.AppendLine($"Parcela #{parcela}");
+                sb.AppendLine(vencimento.ToString());
+                parcela++;
+            }
+            return sb.ToString();
         }
     }
 }
