@@ -9,6 +9,7 @@ namespace src.Entities
         public string Titulo { get; private set; }
         public DateTime Data { get; private set; }
         public double Valor { get; private set; }
+        public Fatura Fatura { get; private set; }
 
         public Contrato(int id, string titulo, DateTime data, double valor)
         {
@@ -16,6 +17,7 @@ namespace src.Entities
             Titulo = titulo;
             Data = data;
             Valor = valor;
+            Fatura = null;
         }
 
         public override string ToString()
