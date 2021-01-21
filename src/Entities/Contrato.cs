@@ -32,16 +32,11 @@ namespace src.Entities
             if(Fatura.Parcelas > 0)
             {
                 sb.AppendLine($"Número de parcelas: {Fatura.Parcelas}");
+                sb.AppendLine($"Tarifas totais: R$ {Fatura.Tarifas.ToString("F2", CultureInfo.InvariantCulture)}");
+                sb.AppendLine($"Juros totais: R$ {Fatura.Juros.ToString("F2", CultureInfo.InvariantCulture)}");
+                sb.AppendLine($"Pagamento total: R$ {Fatura.Total.ToString("F2", CultureInfo.InvariantCulture)}");
+                sb.AppendLine();
             }
-            else
-            {
-                sb.AppendLine("Pagamento à vista");
-            }
-            sb.AppendLine($"Tarifas totais: R$ {Fatura.Tarifas.ToString("F2", CultureInfo.InvariantCulture)}");
-            sb.AppendLine($"Juros totais: R$ {Fatura.Juros.ToString("F2", CultureInfo.InvariantCulture)}");
-            sb.AppendLine($"Pagamento total: R$ {Fatura.Total.ToString("F2", CultureInfo.InvariantCulture)}");
-            sb.AppendLine();
-            sb.AppendLine($"Vencimentos");
             sb.AppendLine(Fatura.ToString());
             return sb.ToString();
         }

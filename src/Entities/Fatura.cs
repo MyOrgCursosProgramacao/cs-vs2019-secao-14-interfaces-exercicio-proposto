@@ -52,16 +52,18 @@ namespace src.Entities
             StringBuilder sb = new StringBuilder();
 
             int parcela = 1;
+            if (Parcelas > 0)
+            {
+                sb.AppendLine($"Vencimentos");
+            }
+            else
+            {
+                sb.AppendLine($"Pagamento à vista");
+            }
             foreach (Vencimento vencimento in Vencimentos)
             {
                 if (Parcelas > 0)
-                {
                     sb.AppendLine($"Parcela #{parcela}");
-                }
-                else
-                {
-                    sb.AppendLine($"Pagamento");
-                }
                 sb.AppendLine(vencimento.ToString());
                 sb.AppendLine();
                 parcela++;
