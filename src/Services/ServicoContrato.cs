@@ -20,15 +20,22 @@ namespace src.Services
         {
             List<Vencimento> vencimentos = new List<Vencimento>();
             Console.WriteLine("Sistema de pagamento: " + _sistemaDePagamento.Sistema());
-            for (int i = 0; i < Parcelas; i++)
-            {
-                DateTime vencimento = contrato.Data.AddMonths(i + 1);
-                double valorDoServico = contrato.Valor / Parcelas;
-                double juros = _sistemaDePagamento.Juros(valorDoServico) * (i + 1);
-                double tarifa = _sistemaDePagamento.Tarifa(valorDoServico + juros);
-                
 
-                vencimentos.Add(new Vencimento(vencimento, valorDoServico, tarifa, juros));
+            if (Parcelas > 0)
+            {
+                for (int i = 0; i < Parcelas; i++)
+                {
+                    DateTime vencimento = contrato.Data.AddMonths(i + 1);
+                    double valorDoServico = contrato.Valor / Parcelas;
+                    double juros = _sistemaDePagamento.Juros(valorDoServico) * (i + 1);
+                    double tarifa = _sistemaDePagamento.Tarifa(valorDoServico + juros);
+
+                    vencimentos.Add(new Vencimento(vencimento, valorDoServico, tarifa, juros));
+                }
+            }
+            else
+            {
+                vencimentos.Add(new Vencimento(contrato.Data, contrato.Valor, _sistemaDePagamento.Tarifa(contrato.Valor), 0.0));
             }
 
             contrato.Fatura = new Fatura(Parcelas, contrato.Valor, vencimentos);

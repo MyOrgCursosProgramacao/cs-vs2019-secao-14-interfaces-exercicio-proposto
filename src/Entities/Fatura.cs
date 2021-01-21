@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
 
 namespace src.Entities
@@ -35,7 +34,7 @@ namespace src.Entities
             get
             {
                 double juros = 0.0;
-                foreach(Vencimento vencimento in Vencimentos)
+                foreach (Vencimento vencimento in Vencimentos)
                 {
                     juros += vencimento.Juros;
                 }
@@ -51,13 +50,23 @@ namespace src.Entities
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
+
             int parcela = 1;
             foreach (Vencimento vencimento in Vencimentos)
             {
-                sb.AppendLine($"Parcela #{parcela}");
+                if (Parcelas > 0)
+                {
+                    sb.AppendLine($"Parcela #{parcela}");
+                }
+                else
+                {
+                    sb.AppendLine($"Pagamento");
+                }
                 sb.AppendLine(vencimento.ToString());
+                sb.AppendLine();
                 parcela++;
             }
+
             return sb.ToString();
         }
     }

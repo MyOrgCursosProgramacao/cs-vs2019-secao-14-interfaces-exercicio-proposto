@@ -27,14 +27,13 @@ namespace src.Entities
         {
             return $"Vencimento: {Data.ToString("dd/MM/yyyy")}"
                 + Environment.NewLine
-                + $"Total: R$ {Total.ToString("F2", CultureInfo.InvariantCulture)}"
+                + $"Valor do serviço: R$ {ValorDoServico.ToString("F2", CultureInfo.InvariantCulture)}"
                 + Environment.NewLine
-                + $"\tValor do serviço: R$ {ValorDoServico.ToString("F2", CultureInfo.InvariantCulture)}"
+                + $"Tarifa: R$ {Tarifa.ToString("F2", CultureInfo.InvariantCulture)}"
                 + Environment.NewLine
-                + $"\tTarifa: R$ {Tarifa.ToString("F2", CultureInfo.InvariantCulture)}"
+                + $"Juros: R$ {Juros.ToString("F2", CultureInfo.InvariantCulture)}"
                 + Environment.NewLine
-                + $"\tJuros: R$ {Juros.ToString("F2", CultureInfo.InvariantCulture)}"
-                + Environment.NewLine;
+                + $"Total: R$ {Total.ToString("F2", CultureInfo.InvariantCulture)}";
         }
     }
 }

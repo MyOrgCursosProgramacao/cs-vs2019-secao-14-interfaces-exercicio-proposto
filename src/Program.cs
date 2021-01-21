@@ -32,7 +32,6 @@ namespace src
             Console.WriteLine();
             Console.WriteLine("-- Resumo do contrato --");
             Console.WriteLine(contrato);
-            
         }
     }
 }
