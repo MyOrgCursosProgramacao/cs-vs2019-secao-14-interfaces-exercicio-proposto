@@ -9,10 +9,6 @@ namespace src.Entities
         public double ValorDoServico { get; private set; }
         public double Tarifa { get; private set; }
         public double Juros { get; private set; }
-        public double Total
-        {
-            get { return ValorDoServico + Tarifa + Juros; }
-        }
 
         public Vencimento(DateTime data, double valorDoServico, double tarifa, double juros)
         {
@@ -20,6 +16,11 @@ namespace src.Entities
             ValorDoServico = valorDoServico;
             Tarifa = tarifa;
             Juros = juros;
+        }
+
+        public double Total
+        {
+            get { return ValorDoServico + Tarifa + Juros; }
         }
 
         public override string ToString()
@@ -33,6 +34,7 @@ namespace src.Entities
                 + $"\tTarifa: R$ {Tarifa.ToString("F2", CultureInfo.InvariantCulture)}"
                 + Environment.NewLine
                 + $"\tJuros: R$ {Juros.ToString("F2", CultureInfo.InvariantCulture)}"
+                + Environment.NewLine;
         }
     }
 }
